@@ -5,18 +5,21 @@ from threading import Thread
 from json_socket import JSONSocket, NoMessageAvailable, ConnectionLost
 from data_model import AbstractTweet, GenericTweet, dbConnect, genericSize
 from socket import error as SocketError
+from config import ServerConfig
 import time
 import json
 import operator
 import sys
 import signal
 import errno
+import getopt
 
-WHOLE_WORLD_COORDS = [ -180.0, -90.0, 180.0, 90.0 ]
+CONFIG = ServerConfig.fromArgs(sys.argv[1:])
+print('loaded config:')
+print(CONFIG)
 
 def verbosePrint(*args, **kwargs):
-    global VERBOSE
-    if VERBOSE:
+    if CONFIG.verbose:
         print(*args, **kwargs)
 
 def split_coordinates(coordinates):
@@ -104,7 +107,7 @@ class Master(Thread):
             try:
                 puppetsCopy += self.puppets
                 self.puppets = []
-                self.splitRegionEvenly(WHOLE_WORLD_COORDS, puppetsCopy)
+                self.splitRegionEvenly(CONFIG.whole_world_coords, puppetsCopy)
                 done = True
 
                 verbosePrint('regions reassigned:')
@@ -121,7 +124,7 @@ class Master(Thread):
     def assignNewPuppets(self):
         for clientSocket, clientAddr in self.newConnections:
             if not self.puppets:
-                coords = WHOLE_WORLD_COORDS
+                coords = CONFIG.whole_world_coords
             else:
                 busiest = self.get_busiest_puppet()
                 busiest.coordinates, coords = split_coordinates(busiest.coordinates)
@@ -240,32 +243,7 @@ signal.signal(signal.SIGTERM, shutdownSignalHandler)
 
 signal.signal(signal.SIGUSR1, sigusr1Handler)
 
-SERVER_HOST = '0.0.0.0'
-SERVER_PORT = 12345
-
-DB_HOST = '127.0.0.1'
-DB_PORT = 27017
-DB_NAME = 'twitter'
-
-VERBOSE = False
-
-if len(sys.argv) > 1 and sys.argv[1] == '-v':
-    sys.argv.remove('-v')
-    VERBOSE = True
-    print('verbose mode on')
-
-if len(sys.argv) not in [ 1, 2, 5 ]:
-    print('usage: server.py [ -v ] server_port [ db_host db_port db_name ]')
-    sys.exit(1)
-
-if len(sys.argv) >= 2:
-    SERVER_PORT = int(sys.argv[1])
-if len(sys.argv) == 5:
-    DB_HOST = sys.argv[2]
-    DB_PORT = int(sys.argv[3])
-    DB_NAME = sys.argv[4]
-
-dbAddress = 'mongodb://%s:%d/%s' % (DB_HOST, DB_PORT, DB_NAME)
+dbAddress = 'mongodb://%s:%d/%s' % (CONFIG.db_host, CONFIG.db_port, CONFIG.db_name)
 server = Server()
-server.start(dbAddress, SERVER_HOST, SERVER_PORT)
+server.start(dbAddress, CONFIG.server_host, CONFIG.server_port)
 
