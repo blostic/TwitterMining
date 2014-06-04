@@ -93,7 +93,7 @@ class ServerConfig(object):
                 ret.verbose = True
             elif o in ('-h', '--help'):
                 ServerConfig.printHelp()
-                return
+                sys.exit(0)
             else:
                 print('unrecognized option: ' + o)
                 sys.exit(1)
