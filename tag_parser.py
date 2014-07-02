@@ -1,6 +1,7 @@
 import json
 import re
 import traceback
+import sys
 from types import StringType
 
 class TagParser():
@@ -10,13 +11,14 @@ class TagParser():
         self.__tag_dict={}
         #a key in __geo_set contains tag and coordinates separated by commas
         self.__geo_set=set()
-        self.__tags_filename=None
+        self.__tags_filenames=[]
         self.__tweets_filename=None
         self.__output_filename=None
         
-    def set_tag_filename(self,name):
+    def add_tag_filename(self,name):
         if type(name) is StringType:
-            self.__tags_filename=name
+            self.__tags_filenames.append(name)
+        print self.__tags_filenames
     
     def set_input_filename(self,name):
         if type(name) is StringType:
@@ -26,8 +28,8 @@ class TagParser():
         if type(name) is StringType:
             self.__output_filename=name
     
-    def get_tag_filename(self, ):
-        return self.__tags_filename
+    def get_tag_filenames(self, ):
+        return self.__tags_filenames
     
     def get_input_filename(self, ):
         return self.__tweets_filname
@@ -37,10 +39,11 @@ class TagParser():
     
     
     def read_tags(self):
-        tags_file=open(self.__tags_filename,"r")
-        for line in tags_file.readlines():
-            tag_with_categories=line.rstrip("\n").split(",")
-            self.__tag_dict[tag_with_categories[0]]=tag_with_categories[1:]
+        for tags_filename in self.__tags_filenames:        
+            tags_file=open(tags_filename,"r")
+            for line in tags_file.readlines():
+                tag_with_categories=line.rstrip("\n").split(",")
+                self.__tag_dict[tag_with_categories[0]]=tag_with_categories[1:]
         print self.__tag_dict
             
     def process_tags(self):
@@ -84,7 +87,11 @@ class TagParser():
                     
 if __name__ == '__main__':
     t=TagParser()
-    t.set_tag_filename("./muzycy")
+    #you can add aditional tag filenames as program arguments
+    for arg in sys.argv[1:]:
+        t.add_tag_filename(arg)
+    t.add_tag_filename("./muzycy")
+    #here you can add more tag filenames
     t.set_input_filename("../twitter.english_tweet.json")
     t.set_output_filename("./output.json")
     t.read_tags()
