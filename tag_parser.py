@@ -18,7 +18,7 @@ class TagParser():
     def add_tag_filename(self,name):
         if type(name) is StringType:
             self.__tags_filenames.append(name)
-        print self.__tags_filenames
+        #print self.__tags_filenames
     
     def set_input_filename(self,name):
         if type(name) is StringType:
@@ -44,24 +44,30 @@ class TagParser():
             for line in tags_file.readlines():
                 tag_with_categories=line.rstrip("\n").split(",")
                 self.__tag_dict[tag_with_categories[0]]=tag_with_categories[1:]
-        print self.__tag_dict
+        #print self.__tag_dict
             
     def process_tags(self):
         tweets_file=open(self.__tweets_filename,"r")
         output_file=open(self.__output_filename,"w")
+        self.__regex_dict={}
+        for cat in self.__tag_dict.keys():
+            self.__regex_dict[cat]=re.compile(cat.lower())
+        
         for line in tweets_file:
             tweet_object=json.loads(line)
             #print tweet_object
             categories=set()
+            
             for cat in self.__tag_dict.keys():
-                prog_regular=re.compile(cat)
+                prog_regular=self.__regex_dict[cat]
                 #prog_at=re.compile(u"@"+cat)
                 #prog_hash=re.compile(u"#"+cat)
-                text_result_regular=prog_regular.match(tweet_object[u'text'])
+                
+                text_result_regular=prog_regular.match(tweet_object[u'text'].lower())
                 #text_result_at=prog_at.match(tweet_object[u'text'])
                 #text_result_hash=prog_hash.match(tweet_object[u'text'])
                 if u'description' in tweet_object:
-                    description_result_regular=prog_regular.match(tweet_object[u'description'])
+                    description_result_regular=prog_regular.match(tweet_object[u'description'].lower())
                     #description_result_at=prog_at.match(tweet_object[u'description'])
                     #description_result_hash=prog_hash.match(tweet_object[u'description'])
                 else:
@@ -71,7 +77,10 @@ class TagParser():
                 if text_result_regular!=None or description_result_regular!=None:#\
                                         #or text_result_at!=None or text_result_hash!=None or desceiption_result_at!=None or description_result_hash!=None:
                     hsh=cat+','+','.join([ i.__str__() for i in tweet_object[u'geo']])
-                    print_text = tweet_object[u'text']+'\n'+tweet_object[u'description']
+                    if u'description' in tweet_object:
+                        print_text = tweet_object[u'text']+'\n'+tweet_object[u'description']
+                    else:
+                        print_text = tweet_object[u'text']+'\n'
                     print hsh
                     #if not (hsh in self.__geo_set):   
                     #self.__geo_set.add(hsh)
@@ -91,6 +100,8 @@ if __name__ == '__main__':
     for arg in sys.argv[1:]:
         t.add_tag_filename(arg)
     t.add_tag_filename("./muzycy")
+    t.add_tag_filename("./sporty.txt")
+    t.add_tag_filename("./video_games.txt")
     #here you can add more tag filenames
     t.set_input_filename("../twitter.english_tweet.json")
     t.set_output_filename("./output.json")
