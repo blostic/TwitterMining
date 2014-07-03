@@ -1,0 +1,200 @@
+Baseball,sport
+Basketball,sport
+Tennis,sport
+Ice Hockey,sport
+American football,sport
+Football,sport
+Curling,sport
+Luge,sport
+Cycling,sport
+Shinty,sport
+Jai alai,sport
+Badminton,sport
+Volleyball,sport
+Beach volleyball,sport
+Cricket,sport
+Rugby football,sport
+Skiing,sport
+Cross-country skiing,sport
+Powerlifting,sport
+Australian rules football,sport
+Rock climbing,sport
+Ice climbing,sport
+Racquetball,sport
+Squash,sport
+Road bicycle racing,sport
+Mountain biking,sport
+Netball,sport
+Fives,sport
+American handball,sport
+Running,sport
+Triathlon,sport
+Inline speed skating,sport
+Rowing,sport
+Swimming,sport
+Gymnastics,sport
+Hurling,sport
+Snowboarding,sport
+Tetherball,sport
+Roller derby,sport
+Skateboarding,sport
+Lacrosse,sport
+Polo,sport
+Water polo,sport
+Surfing,sport
+Diving,sport
+Caving,sport
+Skipping rope,sport
+Finswimming,sport
+Roller sport,sport
+Powerboating,sport
+Korfball,sport
+Bowling,sport
+Golf,sport
+Tug of war,sport
+Bandy,sport
+Waterskiing,sport
+Karate,sport
+Mountaineering,sport
+Cue sports,sport
+Sumo,sport
+Dancesport,sport
+Basque pelota,sport
+Boules,sport
+Wushu,sport
+Orienteering,sport
+Rackets,sport
+Handball,sport
+Weightlifting,sport
+Boxing,sport
+Softball,sport
+Fencing,sport
+Bobsleigh,sport
+Roque,sport
+Track and field athletics,sport
+Judo,sport
+Croquet,sport
+Ice skating,sport
+Table tennis,sport
+Sailing,sport
+Hockey,sport
+Shooting sport,sport
+Canoeing,sport
+Jeu de paume,sport
+Equestrianism,sport
+Water sport,sport
+Wrestling,sport
+Taekwondo,sport
+Biathlon,sport
+Modern pentathlon,sport
+Archery,sport
+Roller hockey,sport
+Ski jumping,sport
+Rhythmic gymnastics,sport
+Synchronized swimming,sport
+Nordic combined,sport
+Skeleton,sport
+Dressage,sport
+Figure skating,sport
+Freestyle wrestling,sport
+Alpine skiing,sport
+Baseball,sport
+Basketball,sport
+Tennis,sport
+Ice Hockey,sport
+American football,sport
+Football,sport
+Curling,sport
+Luge,sport
+Cycling,sport
+Shinty,sport
+Jai alai,sport
+Badminton,sport
+Volleyball,sport
+Beach volleyball,sport
+Cricket,sport
+Rugby football,sport
+Skiing,sport
+Cross-country skiing,sport
+Powerlifting,sport
+Australian rules football,sport
+Rock climbing,sport
+Ice climbing,sport
+Racquetball,sport
+Squash,sport
+Road bicycle racing,sport
+Mountain biking,sport
+Netball,sport
+Fives,sport
+American handball,sport
+Running,sport
+Triathlon,sport
+Inline speed skating,sport
+Rowing,sport
+Swimming,sport
+Gymnastics,sport
+Hurling,sport
+Snowboarding,sport
+Tetherball,sport
+Roller derby,sport
+Skateboarding,sport
+Lacrosse,sport
+Polo,sport
+Water polo,sport
+Surfing,sport
+Diving,sport
+Caving,sport
+Skipping rope,sport
+Finswimming,sport
+Roller sport,sport
+Powerboating,sport
+Korfball,sport
+Bowling,sport
+Golf,sport
+Tug of war,sport
+Bandy,sport
+Waterskiing,sport
+Karate,sport
+Mountaineering,sport
+Cue sports,sport
+Sumo,sport
+Dancesport,sport
+Basque pelota,sport
+Boules,sport
+Wushu,sport
+Orienteering,sport
+Rackets,sport
+Handball,sport
+Weightlifting,sport
+Boxing,sport
+Softball,sport
+Fencing,sport
+Bobsleigh,sport
+Roque,sport
+Track and field athletics,sport
+Judo,sport
+Croquet,sport
+Ice skating,sport
+Table tennis,sport
+Sailing,sport
+Hockey,sport
+Shooting sport,sport
+Canoeing,sport
+Jeu de paume,sport
+Equestrianism,sport
+Water sport,sport
+Wrestling,sport
+Taekwondo,sport
+Biathlon,sport
+Modern pentathlon,sport
+Archery,sport
+Roller hockey,sport
+Ski jumping,sport
+Rhythmic gymnastics,sport
+Synchronized swimming,sport
+Nordic combined,sport
+Skeleton,sport
+Dressage,sport
+Figure skating,sport
+Freestyle wrestling,sport
+Alpine skiing
