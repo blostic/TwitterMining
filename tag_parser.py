@@ -3,6 +3,7 @@ import re
 import traceback
 import sys
 from types import StringType
+import pymongo
 
 class TagParser():
     
@@ -47,14 +48,19 @@ class TagParser():
         #print self.__tag_dict
             
     def process_tags(self):
-        tweets_file=open(self.__tweets_filename,"r")
-        output_file=open(self.__output_filename,"w")
+        client = pymongo.MongoClient("localhost", 27017)
+        db = client.twitter
+		
+        #tweets_file=open(self.__tweets_filename,"r")
+        #output_file=open(self.__output_filename,"w")
         self.__regex_dict={}
         for cat in self.__tag_dict.keys():
             self.__regex_dict[cat]=re.compile(cat.lower())
         
-        for line in tweets_file:
-            tweet_object=json.loads(line)
+        #for line in tweets_file:
+        for line in db.generic_tweet.find():
+            print line
+            tweet_object=line
             #print tweet_object
             categories=set()
             
@@ -76,12 +82,12 @@ class TagParser():
                     #description_result_hash=None
                 if text_result_regular!=None or description_result_regular!=None:#\
                                         #or text_result_at!=None or text_result_hash!=None or desceiption_result_at!=None or description_result_hash!=None:
-                    hsh=cat+','+','.join([ i.__str__() for i in tweet_object[u'geo']])
+                    #hsh=cat+','+','.join([ i.__str__() for i in tweet_object[u'geo']])
                     if u'description' in tweet_object:
                         print_text = tweet_object[u'text']+'\n'+tweet_object[u'description']
                     else:
                         print_text = tweet_object[u'text']+'\n'
-                    print hsh
+                    #print hsh
                     #if not (hsh in self.__geo_set):   
                     #self.__geo_set.add(hsh)
                         #output_file.write(hsh+','+','.join(self.__tag_dict[cat])+'\n')
@@ -91,7 +97,8 @@ class TagParser():
                     
             if categories:
                 tweet_object[u'tags']=list(categories)
-            output_file.write(json.dumps(tweet_object)+'\n')
+                db.generic_tweet.update({'_id' : tweet_object[u'_id']}, {"$set": tweet_object})
+            #output_file.write(json.dumps(tweet_object)+'\n')
             
                     
 if __name__ == '__main__':
