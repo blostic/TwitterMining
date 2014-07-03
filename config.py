@@ -31,12 +31,30 @@ class ServerConfig(object):
             "available options:",
             "  -h, --help - display this message",
             "  -p, --port PORT - bind to local PORT (default: 12345)",
-            "  -d, --db DB_ADDR - use DB_ADDR database. DB_ADDR must be in 'mongodb://HOST:PORT/DB_NAME' format"
+            "  -d, --db DB_ADDR - use DB_ADDR database. DB_ADDR must be in 'mongodb://HOST:PORT/DB_NAME' format",
             "  --db-host HOST - connect to database at HOST",
             "  --db-port PORT - connect to database at PORT",
             "  --db-name NAME - use database NAME",
             "  -f, --config FILE - read config from FILE",
-            "  -v, --verbose - print additional info"
+            "  -v, --verbose - print additional info",
+            "",
+            "config file format:",
+            "",
+            "[db]",
+            "host = <address>",
+            "port = [ 0 ... 65535 ]",
+            "name = <string>",
+            "",
+            "[server]",
+            "host = <address>",
+            "port = [ 0 ... 65535 ]",
+            "min_lon = [ -180.0 ... 180.0 ]",
+            "max_lon = [ -180.0 ... 180.0 ]",
+            "min_lat = [ -90.0 ... 90.0 ]",
+            "max_lat = [ -90.0 ... 90.0 ]",
+            "",
+            "[debug]",
+            "verbose = on|off"
         ])
         print(help)
 
@@ -51,10 +69,10 @@ class ServerConfig(object):
 
         ret.server_host = config.get('server', 'host')
         ret.server_port = config.getint('server', 'port')
-        ret.whole_world_coords = [ config.getfloat('server', 'min_lat'),
-                                   config.getfloat('server', 'min_lon'),
-                                   config.getfloat('server', 'max_lat'),
-                                   config.getfloat('server', 'max_lon') ]
+        ret.whole_world_coords = [ config.getfloat('server', 'min_lon'),
+                                   config.getfloat('server', 'min_lat'),
+                                   config.getfloat('server', 'max_lon'),
+                                   config.getfloat('server', 'max_lat') ]
 
         ret.db_host = config.get('db', 'host')
         ret.db_port = config.getint('db', 'port')
