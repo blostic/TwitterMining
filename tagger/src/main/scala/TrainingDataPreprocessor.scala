@@ -21,7 +21,6 @@ class TrainingDataPreprocessor() {
 
 		// create a new DB and Collection if not present or use existing one
 		val collectionTweets = mongoConn(dbName)(trainingCollectionName)
-
 		collectionTweets.dropCollection()
 
 		val stripper = new StopWordsStripper(stopwordsFile)

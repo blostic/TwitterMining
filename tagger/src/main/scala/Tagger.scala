@@ -16,11 +16,11 @@ import com.mongodb.hadoop.{MongoInputFormat, MongoOutputFormat}
 object Tagger extends App {
 
 	// config properties
-	val dbName = "twitter"
+	val dbName = "tagger"
     val collectionName = "tweets"
     val vectorCollection = "tweets_vectors"
     val outputCollection = "tweets_labeled"
-    val labeledTrainingFile = "tweets/training/labeled.json"
+    val labeledTrainingFile = "tweets/training/kattyperry.json"
     val unlabeledTrainingFile = "tweets/training/unlabeled.json"
     val trainingCollection = "tweets_training"
     val stopWordsFile = "stopwords.csv"
@@ -30,12 +30,12 @@ object Tagger extends App {
     // Spark Mongo/Hadoop config
 
     val mongoTrainingConfig = new Configuration()
-    mongoTrainingConfig.set("mongo.input.uri", "mongodb://127.0.0.1:27017/twitter."+trainingCollection)
-    mongoTrainingConfig.set("mongo.output.uri", "mongodb://127.0.0.1:27017/twitter."+outputCollection) //output is bogus ?
+    mongoTrainingConfig.set("mongo.input.uri", "mongodb://127.0.0.1:27017/tagger."+trainingCollection)
+    mongoTrainingConfig.set("mongo.output.uri", "mongodb://127.0.0.1:27017/tagger."+outputCollection) //output is bogus ?
 
     val mongoTweetsConfig = new Configuration()
-    mongoTweetsConfig.set("mongo.input.uri", "mongodb://127.0.0.1:27017/twitter."+vectorCollection)
-    mongoTweetsConfig.set("mongo.output.uri", "mongodb://127.0.0.1:27017/twitter."+outputCollection) //output is bogus ?
+    mongoTweetsConfig.set("mongo.input.uri", "mongodb://127.0.0.1:27017/tagger."+vectorCollection)
+    mongoTweetsConfig.set("mongo.output.uri", "mongodb://127.0.0.1:27017/tagger."+outputCollection) //output is bogus ?
 
 
 	// get DB server connection
@@ -85,10 +85,11 @@ object Tagger extends App {
 
 	val trainingData = trainingRDD.map { bson =>
 		val vector = bson._2.get("content").asInstanceOf[BasicDBList].toArray
+		println(vector)
 		LabeledPoint(vector(vector.length-1).asInstanceOf[Int].toDouble,Vectors.dense(vector.slice(0,vector.length-1).map(_.asInstanceOf[Int].toDouble)))
 	}
 
-	val numIterations = 40
+	val numIterations = 20
 
 	println("[INFO] Training model")
 
@@ -104,8 +105,10 @@ object Tagger extends App {
 
 	val labelsRDD = tweetsRDD.map { bson =>
 		val features = bson._2.get("content").asInstanceOf[BasicDBList].toArray
+		println(features)
 		val label = model.predict(Vectors.dense(features.map(_.asInstanceOf[Int].toDouble)))
 		val labeledTweet = new BasicBSONObject()
+		println(bson._2.get("tweetid"))
 		labeledTweet.put("tweetid", bson._2.get("tweetid"))
 		labeledTweet.put("label",label)
 		(null, labeledTweet)
