@@ -31,11 +31,11 @@ function initMap(div) {
 		fetchFacets();
 	});
 
-	$("#searchButton").on("click", function () {
+	$('#searchButton').on('click', function () {
 		fetchFacets();
 	});
 
-	$("#searchBox").keyup(function (event) {
+	$('#searchBox').keyup(function (event) {
 		if (event.keyCode == 13) {
 			fetchFacets();
 		}
@@ -43,16 +43,17 @@ function initMap(div) {
 }
 
 function fetchFacets() {
-	var query = $("#searchQuery").val();
-	var elasticSearchQuery = prepareElasticSearchQuery(query);
+	var query = $('#searchQuery').val();
+	var isTagSearchOnly = $('#tagSearchOnly').get(0).checked;
+	var elasticSearchQuery = prepareElasticSearchQuery(query, isTagSearchOnly);
 
 	$.ajax({
 
-		url: "http://localhost:9200/twitter/_search?size=1000000",
-		contentType: "text/json",
-		type: "POST",
+		url: 'http://localhost:9200/twitter/_search?size=1000000',
+		contentType: 'text/json',
+		type: 'POST',
 		data: JSON.stringify(elasticSearchQuery),
-		dataType: "json"
+		dataType: 'json'
 
 	}).done(function (data) {
 
@@ -69,9 +70,9 @@ function fetchFacets() {
 				var totalCount = clusters[i].total;
 
 				if (totalCount === 1) {
-					markerText = "item desc @" + getTweetFromHits(lat, lon, data.hits.hits)._source.text;
+					markerText = 'item desc @' + getTweetFromHits(lat, lon, data.hits.hits)._source.text;
 				} else {
-					markerText = "cluster (" + clusters[i].total + ") @" + lat + ", " + lon;
+					markerText = 'cluster (' + clusters[i].total + ') @' + lat + ', ' + lon;
 				}
 
 				addMarker(
@@ -86,7 +87,7 @@ function fetchFacets() {
 		});
 }
 
-function prepareElasticSearchQuery(query) {
+function prepareElasticSearchQuery(query, tagSearchOnly) {
 
 	var ne = map.getBounds().getNorthEast();
 	var sw = map.getBounds().getSouthWest();
@@ -94,13 +95,19 @@ function prepareElasticSearchQuery(query) {
 	var matchQuery;
 	var factor = -0.04 * zoom + 1.01;
 
-	if (query !== "") {
+	if (query !== '' && tagSearchOnly) { //looking for query only in tags field.
 		matchQuery = {
 			match: {
-				_all: query
+				tags : query
 			}
 		}
-	} else {
+	} else if (query !== '') { //looking for query in all fields
+		matchQuery = {
+			match: {
+				_all : query
+			}
+		}
+	} else { //matching all tweets
 		matchQuery = {
 			match_all: { }
 		}
@@ -114,12 +121,12 @@ function prepareElasticSearchQuery(query) {
 					geo_bounding_box: {
 						location: {
 							top_left: {
-								"lat": ne.lat(),
-								"lon": sw.lng()
+								lat : ne.lat(),
+								lon : sw.lng()
 							},
 							bottom_right: {
-								"lat": sw.lat(),
-								"lon": ne.lng()
+								lat: sw.lat(),
+								lon: ne.lng()
 							}
 						}
 					}
@@ -129,7 +136,7 @@ function prepareElasticSearchQuery(query) {
 		facets: {
 			places: {
 				geohash: {
-					field: "location",
+					field: 'location',
 					factor: factor,
 					show_geohash_cell: true
 				}
