@@ -103,4 +103,33 @@ Załóżmy, że chcemy wyświetlać tweety, które znajdują się w bazie lokaln
     
 
     
+###Tagger
+
+#####Potrzebujemy:
+- Wymagania takie same jak przy wyświetlaniu tweetów (running elasticsearch i mongo).
+Elasticsearch skonfigurowany jak wyżej.
+Obecna implementacja zakłada że elasticsearch jest dostępny na 127.0.0.1:9200, natomiast mongo na 127.0.0.1:27017
+
+- Scala + sbt
+
+#####Wersje:
+W repo znajdują sie dwie wersje taggera: podstawowa (Python) oraz rozszerzona (Scala).
+ 
+- Podstawowa (Python): taguje tweety na podstawie dostarczonych plików z wcześniej zdefiniowanymi tagami. W metodzie każdy tweet jest sprawdzany czy zawiera kluczowe słowa wymienione we wspomnianych plikach. Jeśli tak, przypisuje mu tagi odpowiednie dla tych słów kluczowych.
+- Rozszerzona (Scala): machine learning. Wykorzystuje bibliotekę MLlib Apache Spark. Z założenia metoda ta miała polegać na wielokrotnej klasyfikacji binarnej. W repozytorium znajduje się implementacja realizująca pojedynczą klasyfikację binarną. Niestety nie zachowuje się ona zgodnie z oczekiwaniami. Należałoby odnaleźć błąd, jaki się wkradł podczas implementowania.
+
+#####Uruchomienie
+- Podstawowa: 
+
+++ console: 
+        
+        $ python tag_parser.py [ścieżki do plików z tagami]
+++ gui: 
     
+        $ python simple_tagger_gui.py
+
+- Rozszerzona:
+<br>W folderze 'tagger' znajduje się plik budujący sbt. W tym folderze wołamy:
+
+        $ sbt run
+i wybieramy w zalężności od potrzeb Preprocessor albo Tagger. Preprocessor tworzy bazę na potrzeby taggera i przerzuca do niej odpowiednio sparsowane tweety. Tagger jest właściwą częścią, reliazującą tagowanie tweetów.
