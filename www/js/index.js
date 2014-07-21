@@ -49,7 +49,7 @@ function fetchFacets() {
 
 	$.ajax({
 
-		url: 'http://localhost:9200/twitter/_search?size=1000000',
+		url: 'http://localhost:9200/twitter/_search?size=1000',
 		contentType: 'text/json',
 		type: 'POST',
 		data: JSON.stringify(elasticSearchQuery),
