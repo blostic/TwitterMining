@@ -20,8 +20,8 @@ object Tagger extends App {
     val collectionName = "tweets"
     val vectorCollection = "tweets_vectors"
     val outputCollection = "tweets_labeled"
-    val labeledTrainingFile = "tweets/training/kattyperry.json"
-    val unlabeledTrainingFile = "tweets/training/unlabeled.json"
+    val labeledTrainingFile = "tweets/training/katyperry.json"
+    val unlabeledTrainingFile = "tweets/training/religion.json"
     val trainingCollection = "tweets_training"
     val stopWordsFile = "stopwords.csv"
 

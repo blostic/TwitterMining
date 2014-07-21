@@ -106,11 +106,9 @@ if __name__ == '__main__':
     #you can add aditional tag filenames as program arguments
     for arg in sys.argv[1:]:
         t.add_tag_filename(arg)
-    t.add_tag_filename("./muzycy")
-    t.add_tag_filename("./sporty.txt")
-    t.add_tag_filename("./video_games.txt")
+    #t.add_tag_filename("./tags/muzycy")
+    #t.add_tag_filename("./tags/sporty.txt")
+    #t.add_tag_filename("./tags/video_games.txt")
     #here you can add more tag filenames
-    t.set_input_filename("../twitter.english_tweet.json")
-    t.set_output_filename("./output.json")
     t.read_tags()
     t.process_tags()
