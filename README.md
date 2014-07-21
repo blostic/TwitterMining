@@ -79,6 +79,9 @@ Załóżmy, że chcemy wyświetlać tweety, które znajdują się w bazie lokaln
                   },
                   "userid" : {
                     "type" : "long"
+                  },
+                  "tags" : {
+                  	"type" : "string"
                   }
                 }
               }
