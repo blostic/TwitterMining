@@ -70,7 +70,12 @@ function fetchFacets() {
 				var totalCount = clusters[i].total;
 
 				if (totalCount === 1) {
-					markerText = 'item desc @' + getTweetFromHits(lat, lon, data.hits.hits)._source.text;
+					var tweet = getTweetFromHits(lat, lon, data.hits.hits);
+					if(tweet && tweet._source.tags.length != 0) {
+						markerText = 'item tags @' + tweet._source.tags.toString();
+					}else {
+						markerText = 'item tags @ no tags. ';
+					}
 				} else {
 					markerText = 'cluster (' + clusters[i].total + ') @' + lat + ', ' + lon;
 				}
