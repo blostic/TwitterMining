@@ -41,7 +41,7 @@ def getMostCommonWords():
 	raw_response = elasticSearch.getresponse()
 
 	js = json.loads(raw_response.read())
-
+	print js
 	terms = js["facets"]["tags"]["terms"]
 
 

@@ -4,6 +4,8 @@ import traceback
 import sys
 from types import StringType
 import pymongo
+import time
+import datetime
 
 class TagParser():
     
@@ -59,8 +61,9 @@ class TagParser():
         
         #for line in tweets_file:
         for line in db.generic_tweet.find():
-            print line
             tweet_object=line
+            ts = time.time()
+            print datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'), " - retrieving tweet: ", tweet_object[u'tweetid']
             #print tweet_object
             categories=set()
             
@@ -83,10 +86,6 @@ class TagParser():
                 if text_result_regular!=None or description_result_regular!=None:#\
                                         #or text_result_at!=None or text_result_hash!=None or desceiption_result_at!=None or description_result_hash!=None:
                     #hsh=cat+','+','.join([ i.__str__() for i in tweet_object[u'geo']])
-                    if u'description' in tweet_object:
-                        print_text = tweet_object[u'text']+'\n'+tweet_object[u'description']
-                    else:
-                        print_text = tweet_object[u'text']+'\n'
                     #print hsh
                     #if not (hsh in self.__geo_set):   
                     #self.__geo_set.add(hsh)
