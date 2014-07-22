@@ -36,44 +36,44 @@ class Application(Frame):
         self.text2.insert(END, "[ADDED]")
 		
     def createWidgets(self):
-        textPad=Frame()
+        textPad=Frame(bg="light gray")
         self.text=Text(textPad,height=20,width=150)
         self.text.config(font=("Calibri",11))
         self.text.config(state=DISABLED) 
         self.text.pack(side=TOP)
         textPad.pack()
 		
-        textPad2=Frame()
+        textPad2=Frame(bg="light gray")
         self.text2=Text(textPad2,height=2,width=150)
         self.text2.config(font=("Calibri",11))
         self.text2.config(state=NORMAL) 
         self.text2.pack(side=TOP)
         
 	
-        self.MOST_COMMON_WORDS = Button(textPad, bg="slate gray")
+        self.MOST_COMMON_WORDS = Button(textPad)
         self.MOST_COMMON_WORDS["text"] = "Most common words"
         self.MOST_COMMON_WORDS["command"] =  self.mostCommon
 
-        self.MOST_COMMON_WORDS.pack(side=LEFT)
+        self.MOST_COMMON_WORDS.pack(side=LEFT, pady=5)
 
-        self.add_tag = Button(textPad2, bg="slate gray")
+        self.add_tag = Button(textPad2)
         self.add_tag["text"] = "Add tag"
         self.add_tag["command"] = self.addTag
         self.add_tag.pack(side=LEFT)
 		
-        self.tag = Button(textPad2, bg="slate gray")
+        self.tag = Button(textPad2)
         self.tag["text"] = "TAG TWEETS"
         self.tag["command"] = self.tagTweets
-        self.tag.pack(side=LEFT)
-        textPad2.pack()
+        self.tag.pack(side=LEFT, pady = 5)
+        textPad2.pack(padx=20, pady=20)
 		
-        retagFrame=Frame()
-        self.retagAll = Button(retagFrame, bg="slate gray")
+        retagFrame=Frame(bg="light grey")
+        self.retagAll = Button(retagFrame)
         self.retagAll.config(height = 3, width = 100)
         self.retagAll["text"] = "RETAG ALL"
         self.retagAll["command"] = self.retagAllTweets
-        self.retagAll.pack(side=LEFT)
-        retagFrame.pack()
+        self.retagAll.pack(side=LEFT, pady = 5)
+        retagFrame.pack(pady=20)
 		
         self.pack(padx=20, pady=20)
 
@@ -85,6 +85,7 @@ class Application(Frame):
 
 root = Tk()
 root.attributes('-fullscreen', True)
+root.configure(background='light gray')
 
 app = Application(master=root)
 app.mainloop()
