@@ -71,7 +71,7 @@ function fetchFacets() {
 
 				if (totalCount === 1) {
 					var tweet = getTweetFromHits(lat, lon, data.hits.hits);
-					if(tweet && tweet._source.tags.length != 0) {
+					if(tweet && tweet._source.tags && tweet._source.tags.length != 0) {
 						markerText = 'item tags @' + tweet._source.tags.toString();
 					}else {
 						markerText = 'item tags @ no tags. ';
