@@ -1,4 +1,8 @@
-Świetna biblioteka do Twitter API: *Twython* - https://twython.readthedocs.org/en/latest/index.html
+### Koparka Tweetów
+#### Niezbędne biblioteki
+
+##### Twython
+Biblioteka do Twitter API: *Twython* - https://twython.readthedocs.org/en/latest/index.html
 Opis użycia Streaming API w Twythonie: https://twython.readthedocs.org/en/latest/usage/streaming_api.html
 
 Instalacja Twythona:
@@ -6,10 +10,38 @@ Instalacja Twythona:
     $ sudo apt-get install pip
     $ sudo pip install twython
 
-Mongoengine:
+##### Mongoengine:
 
     $ sudo apt-get install python-mongoengine
+
+####Użycie
+
+Koparka tweetów została napisana w modelu klient-server, dzięki czemu mamy możliwość kopania tweetów w środowisku rozproszonym. 
+
+##### Serwer
+Proces serwera odpala się poprzez wpisanie w terminalu komendy:
+
+    $ python server.py -f twitter.config
     
+Gdzie opcja -f umożliwia wczytanie pliku konfiguracyjnego.
+
+Zgodnie z sugestią, dostarczyliśmy 2 pliki konfiguracyjne:
+
+ - twitter.whole-world.config - umożliwia kopanie tweetów z terenu całego świata
+
+ - twitter.config - umożliwia kopanie tweetów tylko z terenu Krakowa
+
+Aby zapoznać się z formatem pliku konfiguracyjnego, jak również z opcjami uruchomienia servera, należy wpisać w konsoli:
+
+
+    $ python server.py -h
+
+##### Klient
+Proces klienta odpalamy poprzez wpisanie:
+
+	$ client.py [ -v ] server_host server_port [ auth_file ]
+
+
 ###Wyświetlanie tweetów
 
 #####Potrzebujemy:
