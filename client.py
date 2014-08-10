@@ -257,7 +257,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '-v':
     print('verbose mode on')
 
 if len(sys.argv) not in [ 3, 4 ]:
-    print('usage: twitter.py [ -v ] server_host server_port [ auth_file ]')
+    print('usage: client.py [ -v ] server_host server_port [ auth_file ]')
     sys.exit(1)
 
 if len(sys.argv) == 4: AUTH_FILE = sys.argv[3]
